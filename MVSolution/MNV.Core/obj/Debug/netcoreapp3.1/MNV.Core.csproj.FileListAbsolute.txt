@@ -1,0 +1,12 @@
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.AssemblyInfoInputs.cache
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.AssemblyInfo.cs
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.csproj.CoreCompileInputs.cache
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\bin\Debug\netcoreapp3.1\MNV.Core.deps.json
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\bin\Debug\netcoreapp3.1\MNV.Core.dll
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\bin\Debug\netcoreapp3.1\MNV.Core.pdb
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\bin\Debug\netcoreapp3.1\MNV.Domain.dll
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\bin\Debug\netcoreapp3.1\MNV.Domain.pdb
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.csprojAssemblyReference.cache
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.csproj.CopyComplete
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.dll
+C:\_work\MNV POC\MediatorPatternCore3.1\MVSolution\MNV.Core\obj\Debug\netcoreapp3.1\MNV.Core.pdb

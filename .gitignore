@@ -64,3 +64,5 @@
 /MVSolution/MNV.Domain/bin/Debug/netcoreapp3.1
 /MVSolution/MNV.Domain/obj
 /MVSolution/.vs/MVSolution/v16
+/MVSolution/MNV.Mappers/obj
+/MVSolution/MNV.Mappers/bin/Debug/netcoreapp3.1
