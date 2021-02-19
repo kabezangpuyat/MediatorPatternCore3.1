@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNV.Domain", "MNV.Domain\MNV.Domain.csproj", "{092BE2B2-87DA-4FDA-8DFD-A8B0FFB07993}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNV.Domain", "MNV.Domain\MNV.Domain.csproj", "{092BE2B2-87DA-4FDA-8DFD-A8B0FFB07993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNV.Core", "MNV.Core\MNV.Core.csproj", "{0270B2BE-6B5D-401F-A9A2-AAA372752876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNV.Core", "MNV.Core\MNV.Core.csproj", "{0270B2BE-6B5D-401F-A9A2-AAA372752876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNV.Database", "MNV.Database\MNV.Database.csproj", "{B4B246D1-9079-47A1-92AD-6D2A43351FD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNV.Database", "MNV.Database\MNV.Database.csproj", "{B4B246D1-9079-47A1-92AD-6D2A43351FD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNV.Commands", "MNV.Commands\MNV.Commands.csproj", "{D75B1F5E-0B08-4A98-9A15-892CD4E027CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNV.Commands", "MNV.Commands\MNV.Commands.csproj", "{D75B1F5E-0B08-4A98-9A15-892CD4E027CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNV.Mappers", "MNV.Mappers\MNV.Mappers.csproj", "{265CCA97-090B-421F-A793-BCC95D2945C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNV.Mappers", "MNV.Mappers\MNV.Mappers.csproj", "{265CCA97-090B-421F-A793-BCC95D2945C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNV.Queries", "MNV.Queries\MNV.Queries.csproj", "{301B073B-F3A9-44AA-8224-A15EE0443D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{265CCA97-090B-421F-A793-BCC95D2945C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{265CCA97-090B-421F-A793-BCC95D2945C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{265CCA97-090B-421F-A793-BCC95D2945C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301B073B-F3A9-44AA-8224-A15EE0443D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301B073B-F3A9-44AA-8224-A15EE0443D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301B073B-F3A9-44AA-8224-A15EE0443D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301B073B-F3A9-44AA-8224-A15EE0443D84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
