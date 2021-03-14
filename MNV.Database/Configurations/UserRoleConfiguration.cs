@@ -22,13 +22,13 @@ namespace MNV.Database.Configurations
             builder.Property(e => e.Active).HasColumnName("Active").HasDefaultValue(true);
 
             builder.HasOne<Role>(x => x.Role)
-                .WithMany()
+                .WithMany(x=>x.UserRoles)
                 .HasForeignKey(x => x.RoleID)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(true);
 
             builder.HasOne<User>(x => x.User)
-                .WithMany()
+                .WithMany(x=>x.UserRoles)
                 .HasForeignKey(x => x.UserID)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(true);

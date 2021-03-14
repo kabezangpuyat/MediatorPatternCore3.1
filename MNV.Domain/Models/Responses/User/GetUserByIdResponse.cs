@@ -5,9 +5,8 @@ using System.Text;
 
 namespace MNV.Domain.Models.Responses.User
 {
-    public class GetUserByIdResponse : IRequestResponse
+    public class GetUserByIdResponse : ICommandQueryResponse
     {
-        public long ID { get; set; }
         public UserViewModel User { get; set; }
     }
 }

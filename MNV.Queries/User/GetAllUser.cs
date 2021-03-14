@@ -35,7 +35,8 @@ namespace MNV.Queries.User
         #region Handler
         public class GetUserByIdHandler : QueryHandler, IRequestHandler<Query, QueryCollectionResponse>
         {
-            public GetUserByIdHandler(IDataContext dataContext) : base(dataContext)
+            public GetUserByIdHandler(IDataContext dataContext,
+                IMapper mapper) : base(dataContext, mapper)
             {
             }
             public async Task<QueryCollectionResponse> Handle(Query request, CancellationToken cancellationToken)

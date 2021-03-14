@@ -14,10 +14,10 @@ namespace MNV.Queries
     {
         protected readonly IDataContext _dataContext;
         protected readonly IMapper _mapper;
-        public QueryHandler(IDataContext dataContext)
+        public QueryHandler(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
-            //_mapper = mapper;
+            _mapper = mapper;
         }
 
         protected IQueryable<T> GetPaginated<T>(IQueryable<T> collection, PagingModel paging)

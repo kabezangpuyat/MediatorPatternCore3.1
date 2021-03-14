@@ -6,7 +6,7 @@ namespace MNV.Domain.Models.User
 {
     public class UserViewModel
     {
-        //public long? ID { get; set; }
+        public long? ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }

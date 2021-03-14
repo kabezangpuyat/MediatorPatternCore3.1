@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MNV.Domain.Entities;
+using MNV.Domain.Models.Responses.User;
 using MNV.Domain.Models.User;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace MNV.Mappers
                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.MiddleName));
 
             CreateMap<User, UserViewModel>()
-               //.ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))
+               .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))
                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
@@ -32,6 +33,14 @@ namespace MNV.Mappers
                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.MiddleName))
                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName));
 
+            CreateMap<GetUserByIdResponse, User>()
+               .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.User.ID))
+               .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.User.Password))
+               .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+               .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+               .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+               .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
+               .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.Username));
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MNV.Domain.Models.Responses
 {
-    public interface ICommandResponse
+    public interface ICommandQueryResponse
     {
     }
 }

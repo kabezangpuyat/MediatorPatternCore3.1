@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MNV.Domain.Models.Responses.User
 {
-    public class CreateUserResponse : ICommandResponse
+    public class CreateUserResponse : ICommandQueryResponse
     {
         public CreateUserResponse(long id, UserViewModel user)
         {

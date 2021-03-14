@@ -13,7 +13,7 @@ namespace MNV.Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
-
+        public virtual ICollection<UserRole> UserRoles { get; set; }
         [JsonIgnore]
         public List<RefreshToken> RefreshTokens { get; set; }
     }

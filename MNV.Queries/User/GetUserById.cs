@@ -6,6 +6,7 @@ using MNV.Core.Exceptions;
 using MNV.Domain.Constants;
 using MNV.Domain.Models.Responses;
 using MNV.Domain.Models.Responses.User;
+using MNV.Domain.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,25 +27,30 @@ namespace MNV.Queries.User
         #region Query
         public class Query : IQuery 
         {
+            public Query(long ID)
+            {
+                this.ID = ID;
+            }
             public long ID { get; set; }
         }
 
         #endregion
 
         #region Handler
-        public class GetUserByIdHandler : QueryHandler, IRequestHandler<Query, IRequestResponse>
+        public class GetUserByIdHandler : QueryHandler, IRequestHandler<Query, ICommandQueryResponse>
         {
-            public GetUserByIdHandler(IDataContext dataContext) : base(dataContext)
+            public GetUserByIdHandler(IDataContext dataContext,
+                IMapper mapper) : base(dataContext, mapper)
             {
             }
-            public async Task<IRequestResponse> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ICommandQueryResponse> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await _dataContext.User.Where(x => x.ID == request.ID).FirstOrDefaultAsync();
                 if (user is null)
                     throw new DataNoFoundException(ExceptionMessageConstants.DataNotFound);
 
-                var result = _mapper.Map<GetUserByIdResponse>(user);
-                result.ID = user.ID;
+                var model = _mapper.Map<UserViewModel>(user);
+                var result = new GetUserByIdResponse { User = model };
 
                 return result;
             }

@@ -23,6 +23,7 @@ namespace MNV.Database
             //modelBuilder.HasSequence<int>("OrderNumbers", schema: "shared")
             //    .StartsAt(1).IncrementsBy(1);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            Seed.Initialiaze(modelBuilder);
         }
 
         #region IDataContext

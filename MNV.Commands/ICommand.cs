@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MNV.Commands
 {
-    public interface ICommand : IRequest<ICommandResponse>
+    public interface ICommand : IRequest<ICommandQueryResponse>
     {
     }
 }

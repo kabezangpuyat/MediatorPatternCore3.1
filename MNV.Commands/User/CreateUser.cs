@@ -20,28 +20,24 @@ namespace MNV.Commands.User
     /// 
     /// Benefits of using records is its immutable
     /// </summary>
-    public static class CreateUserCommand
+    public static class CreateUser
     {
         #region Command
         public class Command : ICommand
         {
-            public Command(UserViewModel model)
-            {
-                Model = model;
-            }
-            public UserViewModel Model { get; set; }
+            public UserViewModel UserViewModel { get; set; }
         }
         #endregion
 
         #region Handler
-        public class Handler : CommandHandler, IRequestHandler<Command, ICommandResponse>
+        public class Handler : CommandHandler, IRequestHandler<Command, ICommandQueryResponse>
         {
             public Handler(IDataContext dataContext, IMapper mapper) : base(dataContext, mapper)
             {
             }
-            public async Task<ICommandResponse> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ICommandQueryResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var data = _mapper.Map<Domain.Entities.User>(request.Model);
+                var data = _mapper.Map<Domain.Entities.User>(request);
                 _dataContext.User.Add(data);
                 await _dataContext.SaveChangesAsync()
                     .ConfigureAwait(false);
