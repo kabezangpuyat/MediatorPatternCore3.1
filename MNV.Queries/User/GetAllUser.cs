@@ -8,6 +8,7 @@ using MNV.Domain.Models.Queries;
 using MNV.Domain.Models.Responses;
 using MNV.Domain.Models.Responses.User;
 using MNV.Domain.Models.User;
+using MNV.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +42,17 @@ namespace MNV.Queries.User
             }
             public async Task<QueryCollectionResponse> Handle(Query request, CancellationToken cancellationToken)
             {
-                var result = _dataContext.User.AsQueryable();
-                if (result is null)
+                var data = _dataContext.User.AsQueryable();
+                var count = data.Count();
+                if (data is null)
                     throw new DataNoFoundException(ExceptionMessageConstants.DataNotFound);
 
                 if (request.Paging.Page > 0 && request.Paging.PageSize > 0)
-                    result = GetPaginated<Domain.Entities.User>(result, request.Paging);
+                    data = GetPaginated<Domain.Entities.User>(data, request.Paging);
 
-                return await Task.FromResult(new GetAllUserResponse() { Results = result, Total = result.Count() });
+                var result = data.ToUserViewModelQueryable();
+
+                return await Task.FromResult(new GetAllUserResponse() { Results = result, Total = count });
             }
         }
         #endregion

@@ -22,6 +22,8 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.OpenApi.Models;
+using MNV.Core.Services;
+using MNV.Infrastructure.Services;
 
 namespace MNV.Web
 {
@@ -102,6 +104,11 @@ namespace MNV.Web
                 .AddEntityFrameworkSqlServer()
                 .AddDbContext<DataContext>(options => options.UseSqlServer(constring.WebApiConnection));
             services.AddTransient<IDataContext>(provider => provider.GetService<DataContext>());
+            #endregion
+
+            #region Application Services Configuration
+            services.AddTransient<IEncryptionService, EncryptionService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
             #endregion
 
             #region Mediator

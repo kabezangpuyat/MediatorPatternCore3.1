@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MNV.Domain.Models.Requests;
 
 namespace MNV.Web.Controllers
 {
@@ -44,9 +45,9 @@ namespace MNV.Web.Controllers
         }
 
         [HttpPost("create"), AllowAnonymous]
-        public async Task<IActionResult> Create(UserViewModel model)
+        public async Task<IActionResult> Create(CreateUserRequest model)
         {
-            var command = new CreateUser.Command { UserViewModel = model };
+            var command = new CreateUser.Command { CreateUserRequest = model };
             return await ExecuteCommand(command)
                 .ConfigureAwait(false);
         }

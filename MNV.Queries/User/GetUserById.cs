@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MNV.Mappers;
 using MNV.Core.Database;
 using MNV.Core.Exceptions;
 using MNV.Domain.Constants;
@@ -45,14 +46,15 @@ namespace MNV.Queries.User
             }
             public async Task<ICommandQueryResponse> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _dataContext.User.Where(x => x.ID == request.ID).FirstOrDefaultAsync();
+                var user = _dataContext.User.Where(x => x.ID == request.ID).AsQueryable();
                 if (user is null)
                     throw new DataNoFoundException(ExceptionMessageConstants.DataNotFound);
 
-                var model = _mapper.Map<UserViewModel>(user);
+                var model = user.ToSingleUserViewModel();
+                    //_mapper.Map<UserViewModel>(user);
                 var result = new GetUserByIdResponse { User = model };
 
-                return result;
+                return await Task.FromResult(result);
             }
         }
         #endregion

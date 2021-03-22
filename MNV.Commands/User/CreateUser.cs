@@ -2,15 +2,19 @@
 using MediatR;
 using MNV.Core.Database;
 using MNV.Core.Exceptions;
+using MNV.Core.Services;
 using MNV.Domain.Constants;
+using MNV.Domain.Models.Requests;
 using MNV.Domain.Models.Responses;
 using MNV.Domain.Models.Responses.User;
+using MNV.Mappers;
 using MNV.Domain.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MNV.Commands.User
 {
@@ -25,19 +29,26 @@ namespace MNV.Commands.User
         #region Command
         public class Command : ICommand
         {
-            public UserViewModel UserViewModel { get; set; }
+            public CreateUserRequest CreateUserRequest { get; set; }
         }
         #endregion
 
         #region Handler
         public class Handler : CommandHandler, IRequestHandler<Command, ICommandQueryResponse>
         {
-            public Handler(IDataContext dataContext, IMapper mapper) : base(dataContext, mapper)
+            #region Private global variable(s)
+            private readonly IEncryptionService _enryptionService;
+            #endregion
+            public Handler(IDataContext dataContext,
+                IMapper mapper,
+                IEncryptionService enctryptionService) : base(dataContext, mapper)
             {
+                this._enryptionService = enctryptionService ?? throw new ArgumentNullException(nameof(enctryptionService));
             }
             public async Task<ICommandQueryResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var data = _mapper.Map<Domain.Entities.User>(request);
+                request.CreateUserRequest.Password = _enryptionService.Encrypt(request.CreateUserRequest.Password);
+                var data = _mapper.Map<Domain.Entities.User>(request.CreateUserRequest);
                 _dataContext.User.Add(data);
                 await _dataContext.SaveChangesAsync()
                     .ConfigureAwait(false);
@@ -45,9 +56,13 @@ namespace MNV.Commands.User
                 if (data == null)
                     throw new EntityNotCreatedException(ExceptionMessageConstants.ErrorCreatingUser);
 
-                var result = _mapper.Map<UserViewModel>(data);
+                var result = _dataContext.User.Where(x => x.ID == data.ID)
+                    .ToSingleUserViewModel();
+                //var result = _mapper.Map<UserViewModel>(data);
+                //result.Password = _enryptionService.Decrypt(result.Password);
+                //result.ID = data.ID;
 
-                return new CreateUserResponse(data.ID, result);
+                return new CreateUserResponse(result);
             }
         }
         #endregion

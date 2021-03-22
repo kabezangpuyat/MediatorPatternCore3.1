@@ -7,12 +7,10 @@ namespace MNV.Domain.Models.Responses.User
 {
     public class CreateUserResponse : ICommandQueryResponse
     {
-        public CreateUserResponse(long id, UserViewModel user)
+        public CreateUserResponse(UserViewModel user)
         {
-            ID = id;
             User = user;
         }
-        public long ID { get; set; }
         public UserViewModel User { get; set; }
     }
 }
