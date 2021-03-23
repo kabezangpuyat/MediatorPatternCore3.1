@@ -41,11 +41,11 @@ namespace MNV.Database
         {
             Guid key = Guid.Parse("2B7D30D0-8DC0-4343-9275-860E3959472E");
             Guid key2 = Guid.Parse("80B24D7B-8873-4E04-9B91-9FB70C07AACF");
-
+            //NOTE: Password == pasok12345
             builder.Entity<User>()
                 .HasData(
-                    new User { ID = 1, Username = "mcnielv@gmail.com", Email = "mcnielv@gmail.com", Password = "Pasok12345", FirstName = "McNiel", LastName = "Viray", MiddleName = "N", Key = key, Active = true, CreatedByID = 1, DateCreated = DateTimeOffset.Now},
-                    new User { ID = 2, Username = "mcniel.viray@gmail.com", Email = "mcniel.viray@gmail.com", Password = "Pasok12345", FirstName = "McNiel", LastName = "Viray II", MiddleName = "N", Key = key2, Active = true, CreatedByID = 1, DateCreated = DateTimeOffset.Now }
+                    new User { ID = 1, Username = "mcnielv@gmail.com", Email = "mcnielv@gmail.com", Password = "Jaemp2W0c4pSRQ8SMICEvg==", FirstName = "McNiel", LastName = "Viray", MiddleName = "N", Key = key, Active = true, CreatedByID = 1, DateCreated = DateTimeOffset.Now},
+                    new User { ID = 2, Username = "mcniel.viray@gmail.com", Email = "mcniel.viray@gmail.com", Password = "Jaemp2W0c4pSRQ8SMICEvg==", FirstName = "McNiel", LastName = "Viray II", MiddleName = "N", Key = key2, Active = true, CreatedByID = 1, DateCreated = DateTimeOffset.Now }
                 );
         }
         private static void SeedUserRole(ModelBuilder builder)

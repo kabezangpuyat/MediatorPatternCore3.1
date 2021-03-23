@@ -24,6 +24,8 @@ using AutoMapper;
 using Microsoft.OpenApi.Models;
 using MNV.Core.Services;
 using MNV.Infrastructure.Services;
+using MNV.Core.Providers;
+using MNV.Infrastructure.Providers;
 
 namespace MNV.Web
 {
@@ -85,15 +87,15 @@ namespace MNV.Web
                     Type = SecuritySchemeType.ApiKey
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                     {
-                      {
-                          new OpenApiSecurityScheme
-                          {
-                              Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                          },
-                          new[] { "readAccess", "writeAccess" }
-                      }
-                     });
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                        },
+                        new[] { "readAccess", "writeAccess" }
+                    }
+                });
             });
             #endregion
 
@@ -109,6 +111,7 @@ namespace MNV.Web
             #region Application Services Configuration
             services.AddTransient<IEncryptionService, EncryptionService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
             #endregion
 
             #region Mediator
@@ -146,6 +149,13 @@ namespace MNV.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseCors(builder => builder
+              .WithOrigins("http://localhost:3000",
+                           "https://test.test.com")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials());
 
             app.UseAuthorization();
 

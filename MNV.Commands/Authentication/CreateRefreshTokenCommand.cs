@@ -8,6 +8,7 @@ using MNV.Core.Services;
 using MNV.Domain.Constants;
 using MNV.Domain.Models.Authentication;
 using MNV.Domain.Models.Responses;
+using MNV.Domain.Models.Responses.Authentication;
 using MNV.Mappers;
 using System;
 using System.Collections.Generic;
@@ -19,18 +20,12 @@ using System.Threading.Tasks;
 
 namespace MNV.Commands.Authentication
 {
-    public static class CreateJWTokenCommand
+    public static class CreateRefreshTokenCommand
     {
         #region Command
-        public class Command : AuthenticationModel, ICommand
+        public class Command : ICommand
         {
-            public Command( string username, string password, string ipaddress)
-            {
-                this.Username = username;
-                this.Password = password;
-                this.IpAddress = ipaddress;
-            }
-            public string IpAddress { get; set; }
+           public RefreshTokenModel RefreshTokenModel { get; set; }
         }
         #endregion
 
@@ -39,34 +34,33 @@ namespace MNV.Commands.Authentication
         {
             private readonly IEncryptionService _encryptionService;
             private readonly IAuthenticationService _authenticationService;
-            private readonly IMediator _mediator;
             public Handler(IDataContext dataContext, 
-                IMapper mapper,               
-                IMediator mediator,
+                IMapper mapper,
                 ICurrentUserProvider currentUserProvider,
                 IEncryptionService encryptionService,
                 IAuthenticationService authenticationService) : base(dataContext, mapper, currentUserProvider)
             {
                 this._encryptionService = encryptionService ?? throw new ArgumentException(nameof(encryptionService));
                 this._authenticationService = authenticationService ?? throw new ArgumentException(nameof(authenticationService));
-                this._mediator = mediator ?? throw new ArgumentException(nameof(mediator));
             }
 
             public async Task<ICommandQueryResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var encryptedPassword = _encryptionService.Encrypt(request.Password);
-                var data = _dataContext.User.Where(x => x.Username == request.Username && x.Password == encryptedPassword);
+                var data = new Domain.Entities.RefreshToken
+                {
+                    UserID = request.RefreshTokenModel.AppUserID,
+                    Token = request.RefreshTokenModel.Token,
+                    Expires = request.RefreshTokenModel.Expires,
+                    Created = request.RefreshTokenModel.Created,
+                    CreatedByIp = request.RefreshTokenModel.CreatedByIp,
+                    Revoked = request.RefreshTokenModel.Revoked,
+                    RevokedByIp = request.RefreshTokenModel.RevokedByIp,
+                    ReplacedByToken = request.RefreshTokenModel.ReplacedByToken
+                };
+                _dataContext.RefreshToken.Add(data);
+                await _dataContext.SaveChangesAsync();
 
-                if(data == null)
-                    throw new DataNoFoundException(ExceptionMessageConstants.DataNotFound);
-
-                var user = data.ToSingleUserViewModel();
-
-                var jwtResponse = _authenticationService.Authenticate(user, request.IpAddress);
-                //Create RefreshToken
-                await _mediator.Send(new CreateRefreshTokenCommand.Command { RefreshTokenModel = jwtResponse.RefreshTokenModel });
-
-                return await Task.FromResult(jwtResponse);
+                return new CreateRefreshTokenResponse(request.RefreshTokenModel);
             }
 
         }

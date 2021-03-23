@@ -103,5 +103,35 @@ namespace MNV.Mappers
             }
             return model;
         }
+
+        public static UserViewModel ToSingleUserViewModel(this Domain.Entities.User val)
+        {
+            UserViewModel model = new UserViewModel();
+            if (val == null)
+                model = null;
+            else
+            {
+                model =  new UserViewModel
+                {
+                    ID = val.ID,
+                    Key = val.Key,
+                    Username = val.Username,
+                    Password = val.Password,
+                    Email = val.Email,
+                    FirstName = val.FirstName,
+                    LastName = val.LastName,
+                    MiddleName = val.MiddleName,
+                    Active = val.Active,
+                    Roles = val.UserRoles?.Select(ur => new RoleViewModel
+                    {
+                        ID = ur.RoleID,
+                        Key = ur.Role.Key,
+                        Name = ur.Role.Name,
+                        Active = ur.Role.Active
+                    }).ToList() ?? null
+                };
+            }
+            return model;
+        }
     }
 }

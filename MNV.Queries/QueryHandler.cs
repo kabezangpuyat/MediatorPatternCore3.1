@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MNV.Core.Database;
+using MNV.Core.Providers;
 using MNV.Domain.Models.Queries;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace MNV.Queries
     {
         protected readonly IDataContext _dataContext;
         protected readonly IMapper _mapper;
-        public QueryHandler(IDataContext dataContext, IMapper mapper)
+        protected readonly ICurrentUserProvider _currentUserProvider;
+        public QueryHandler(IDataContext dataContext, IMapper mapper, ICurrentUserProvider currentUserProvider)
         {
-            _dataContext = dataContext;
-            _mapper = mapper;
+            _dataContext = dataContext ?? throw new ArgumentException(nameof(dataContext));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
+            _currentUserProvider = currentUserProvider ?? throw new ArgumentException(nameof(currentUserProvider));
         }
 
         protected IQueryable<T> GetPaginated<T>(IQueryable<T> collection, PagingModel paging)

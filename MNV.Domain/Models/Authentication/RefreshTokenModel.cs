@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MNV.Domain.Entities
+namespace MNV.Domain.Models.Authentication
 {
-    public class RefreshToken
+    public class RefreshTokenModel
     {
         public long ID { get; set; }
-        public long UserID { get; set; }
+        public long AppUserID { get; set; }
         public string Token { get; set; }
         public DateTime Expires { get; set; }
         public bool IsExpired => DateTime.Now >= Expires;
@@ -17,7 +17,5 @@ namespace MNV.Domain.Entities
         public string RevokedByIp { get; set; }
         public string ReplacedByToken { get; set; }
         public bool IsActive => Revoked == null && !IsExpired;
-
-        public User User { get; set; }
     }
 }

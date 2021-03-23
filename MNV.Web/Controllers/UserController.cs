@@ -29,7 +29,7 @@ namespace MNV.Web.Controllers
             return Ok(new { message = "" });
         }
 
-        [HttpGet("get-all"), AllowAnonymous]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAll(int? page = null, int? pagesize = null)
         {
             var collection = new GetAllUser.Query() { Paging = new PagingModel { Page = page ?? 0, PageSize = pagesize ?? 0 } };
@@ -37,17 +37,17 @@ namespace MNV.Web.Controllers
                 .ConfigureAwait(false);
         }
 
-        [HttpGet("get-by-id/{id}"), AllowAnonymous]
+        [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(long id)
         {
             return await ExecuteQuery(new GetUserById.Query(id))
                 .ConfigureAwait(false);
         }
 
-        [HttpPost("create"), AllowAnonymous]
+        [HttpPost("create")]
         public async Task<IActionResult> Create(CreateUserRequest model)
         {
-            var command = new CreateUser.Command { CreateUserRequest = model };
+            var command = new CreateUserCommand.Command { CreateUserRequest = model };
             return await ExecuteCommand(command)
                 .ConfigureAwait(false);
         }

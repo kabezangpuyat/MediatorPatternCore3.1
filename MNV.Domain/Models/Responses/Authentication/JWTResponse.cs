@@ -1,6 +1,9 @@
-﻿using System;
+﻿using MNV.Domain.Models.Authentication;
+using MNV.Domain.Models.User;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace MNV.Domain.Models.Responses.Authentication
 {
@@ -15,8 +18,10 @@ namespace MNV.Domain.Models.Responses.Authentication
 
         //[JsonIgnore] // refresh token is returned in http only cookie
         public string RefreshToken { get; set; }
+        [JsonIgnore]
+        public RefreshTokenModel RefreshTokenModel { get; set; }
 
-        public JWTResponse(Entities.User user, string jwtToken, string refreshToken, DateTime expiryDate)
+        public JWTResponse(UserViewModel user, string jwtToken, string refreshToken, DateTime expiryDate, RefreshTokenModel refreshModelToken)
         {
             Id = user.ID;
             FirstName = user.FirstName;
@@ -25,6 +30,7 @@ namespace MNV.Domain.Models.Responses.Authentication
             JwtToken = jwtToken;
             RefreshToken = refreshToken;
             ExpiryDate = expiryDate;
+            RefreshTokenModel = refreshModelToken;
         }
     }
 }

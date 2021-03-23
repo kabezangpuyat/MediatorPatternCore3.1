@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MNV.Core.Database;
 using MNV.Core.Exceptions;
+using MNV.Core.Providers;
 using MNV.Domain.Constants;
 using MNV.Domain.Models.Queries;
 using MNV.Domain.Models.Responses;
@@ -37,11 +38,13 @@ namespace MNV.Queries.User
         public class GetUserByIdHandler : QueryHandler, IRequestHandler<Query, QueryCollectionResponse>
         {
             public GetUserByIdHandler(IDataContext dataContext,
-                IMapper mapper) : base(dataContext, mapper)
+                IMapper mapper,
+                ICurrentUserProvider currentUserProvider) : base(dataContext, mapper, currentUserProvider)
             {
             }
             public async Task<QueryCollectionResponse> Handle(Query request, CancellationToken cancellationToken)
             {
+                var currentuser = _currentUserProvider.GetCurrentUser();
                 var data = _dataContext.User.AsQueryable();
                 var count = data.Count();
                 if (data is null)

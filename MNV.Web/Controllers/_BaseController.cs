@@ -25,6 +25,24 @@ namespace MNV.Web.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<IActionResult> ExecuteResult(object result)
+        {
+            try
+            {
+                return await Task.FromResult(Ok(result));
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                if (ex.GetType() == typeof(EntityNotCreatedException))
+                {
+                    message = ((EntityNotCreatedException)ex).Message;
+                }
+                return BadRequest(new { message = message });
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> ExecuteCommand(ICommand command)
         {
             try

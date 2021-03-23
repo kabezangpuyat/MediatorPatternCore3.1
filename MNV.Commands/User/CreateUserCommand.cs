@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using MNV.Core.Providers;
 
 namespace MNV.Commands.User
 {
@@ -24,7 +25,7 @@ namespace MNV.Commands.User
     /// 
     /// Benefits of using records is its immutable
     /// </summary>
-    public static class CreateUser
+    public static class CreateUserCommand
     {
         #region Command
         public class Command : ICommand
@@ -41,14 +42,17 @@ namespace MNV.Commands.User
             #endregion
             public Handler(IDataContext dataContext,
                 IMapper mapper,
-                IEncryptionService enctryptionService) : base(dataContext, mapper)
+                ICurrentUserProvider currentUserProvider,
+                IEncryptionService enctryptionService) : base(dataContext, mapper, currentUserProvider)
             {
                 this._enryptionService = enctryptionService ?? throw new ArgumentNullException(nameof(enctryptionService));
             }
             public async Task<ICommandQueryResponse> Handle(Command request, CancellationToken cancellationToken)
             {
+                var currentuser = _currentUserProvider.GetCurrentUser();
                 request.CreateUserRequest.Password = _enryptionService.Encrypt(request.CreateUserRequest.Password);
                 var data = _mapper.Map<Domain.Entities.User>(request.CreateUserRequest);
+                data.CreatedByID = currentuser.ID;
                 _dataContext.User.Add(data);
                 await _dataContext.SaveChangesAsync()
                     .ConfigureAwait(false);
@@ -56,11 +60,7 @@ namespace MNV.Commands.User
                 if (data == null)
                     throw new EntityNotCreatedException(ExceptionMessageConstants.ErrorCreatingUser);
 
-                var result = _dataContext.User.Where(x => x.ID == data.ID)
-                    .ToSingleUserViewModel();
-                //var result = _mapper.Map<UserViewModel>(data);
-                //result.Password = _enryptionService.Decrypt(result.Password);
-                //result.ID = data.ID;
+                var result = data.ToSingleUserViewModel();
 
                 return new CreateUserResponse(result);
             }

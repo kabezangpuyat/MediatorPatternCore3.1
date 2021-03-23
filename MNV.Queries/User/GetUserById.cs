@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MNV.Core.Providers;
 
 namespace MNV.Queries.User
 {
@@ -41,19 +42,20 @@ namespace MNV.Queries.User
         public class GetUserByIdHandler : QueryHandler, IRequestHandler<Query, ICommandQueryResponse>
         {
             public GetUserByIdHandler(IDataContext dataContext,
-                IMapper mapper) : base(dataContext, mapper)
+                IMapper mapper,
+                ICurrentUserProvider currentUserProvider) : base(dataContext, mapper, currentUserProvider)
             {
             }
             public async Task<ICommandQueryResponse> Handle(Query request, CancellationToken cancellationToken)
             {
+                var currentuser = _currentUserProvider.GetCurrentUser();
                 var user = _dataContext.User.Where(x => x.ID == request.ID).AsQueryable();
                 if (user is null)
                     throw new DataNoFoundException(ExceptionMessageConstants.DataNotFound);
 
                 var model = user.ToSingleUserViewModel();
-                    //_mapper.Map<UserViewModel>(user);
+                   
                 var result = new GetUserByIdResponse { User = model };
-
                 return await Task.FromResult(result);
             }
         }
