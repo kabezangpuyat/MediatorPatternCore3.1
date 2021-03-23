@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MNV.Domain.Models.Requests;
+using MNV.Domain.Constants;
 
 namespace MNV.Web.Controllers
 {
@@ -23,12 +24,6 @@ namespace MNV.Web.Controllers
 
 
         #region IActionResult(s)
-        [HttpGet("values")]
-        public IActionResult Index()
-        {
-            return Ok(new { message = "" });
-        }
-
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll(int? page = null, int? pagesize = null)
         {
@@ -44,9 +39,28 @@ namespace MNV.Web.Controllers
                 .ConfigureAwait(false);
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> Create(CreateUserRequest model)
+        [HttpPost("create-superadmin-user")]
+        public async Task<IActionResult> CreateSuperAdminUser(CreateUserRequest model)
         {
+            model.RoleId = RoleConstants.Superadmin;
+            var command = new CreateUser.Command { CreateUserRequest = model };
+            return await ExecuteCommand(command)
+                .ConfigureAwait(false);
+        }
+
+        [HttpPost("create-admin-user")]
+        public async Task<IActionResult> CreateAminUser(CreateUserRequest model)
+        {
+            model.RoleId = RoleConstants.Admin;
+            var command = new CreateUser.Command { CreateUserRequest = model };
+            return await ExecuteCommand(command)
+                .ConfigureAwait(false);
+        }
+
+        [HttpPost("create-guest-user")]
+        public async Task<IActionResult> CreateGuestUser(CreateUserRequest model)
+        {
+            model.RoleId = RoleConstants.Guest;
             var command = new CreateUser.Command { CreateUserRequest = model };
             return await ExecuteCommand(command)
                 .ConfigureAwait(false);

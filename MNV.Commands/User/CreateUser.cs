@@ -53,6 +53,7 @@ namespace MNV.Commands.User
                 request.CreateUserRequest.Password = _enryptionService.Encrypt(request.CreateUserRequest.Password);
                 var data = _mapper.Map<Domain.Entities.User>(request.CreateUserRequest);
                 data.CreatedByID = currentuser.ID;
+
                 _dataContext.User.Add(data);
                 await _dataContext.SaveChangesAsync()
                     .ConfigureAwait(false);
@@ -60,8 +61,16 @@ namespace MNV.Commands.User
                 if (data == null)
                     throw new EntityNotCreatedException(ExceptionMessageConstants.ErrorCreatingUser);
 
-                var result = data.ToSingleUserViewModel();
+                //create user role
+                var userRole = new Domain.Entities.UserRole { UserID = data.ID, RoleID = request.CreateUserRequest.RoleId, CreatedByID = currentuser.ID };
+                _dataContext.UserRole.Add(userRole);
+                await _dataContext.SaveChangesAsync();
 
+                if(userRole == null)
+                    throw new EntityNotCreatedException(ExceptionMessageConstants.ErrorCreatingUserRole);
+
+                var result = _dataContext.User.Where(x=>x.ID==data.ID).ToSingleUserViewModel();
+                
                 return new CreateUserResponse(result);
             }
         }
