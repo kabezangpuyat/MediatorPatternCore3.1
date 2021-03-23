@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace MNV.Commands.Authentication
 {
-    public static class CreateRefreshTokenCommand
+    public static class CreateRefreshToken
     {
         #region Command
         public class Command : ICommand

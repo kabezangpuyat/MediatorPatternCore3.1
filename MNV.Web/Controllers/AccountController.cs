@@ -32,7 +32,7 @@ namespace MNV.Web.Controllers
         [HttpPost("authenticate"), AllowAnonymous]
         public async Task<IActionResult> GetAll(AuthenticationModel model)
         {
-            var command = new CreateJWTokenCommand.Command(model.Username, model.Password, this.IpAddress());
+            var command = new CreateJWToken.Command(model.Username, model.Password, this.IpAddress());
             var response = await _mediator.Send(command) as JWTResponse;
 
             if (response == null)

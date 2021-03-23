@@ -47,7 +47,7 @@ namespace MNV.Web.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateUserRequest model)
         {
-            var command = new CreateUserCommand.Command { CreateUserRequest = model };
+            var command = new CreateUser.Command { CreateUserRequest = model };
             return await ExecuteCommand(command)
                 .ConfigureAwait(false);
         }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MNV.Commands.Authentication
 {
-    public class RevokeTokenCommand : RevokeTokenModel, ICommand
+    public class RevokeToken : RevokeTokenModel, ICommand
     {
     }
 }

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace MNV.Commands.Authentication
 {
-    public static class CreateJWTokenCommand
+    public static class CreateJWToken
     {
         #region Command
         public class Command : AuthenticationModel, ICommand
@@ -64,7 +64,7 @@ namespace MNV.Commands.Authentication
 
                 var jwtResponse = _authenticationService.Authenticate(user, request.IpAddress);
                 //Create RefreshToken
-                await _mediator.Send(new CreateRefreshTokenCommand.Command { RefreshTokenModel = jwtResponse.RefreshTokenModel });
+                await _mediator.Send(new CreateRefreshToken.Command { RefreshTokenModel = jwtResponse.RefreshTokenModel });
 
                 return await Task.FromResult(jwtResponse);
             }

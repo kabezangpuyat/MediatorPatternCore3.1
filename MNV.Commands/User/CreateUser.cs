@@ -25,7 +25,7 @@ namespace MNV.Commands.User
     /// 
     /// Benefits of using records is its immutable
     /// </summary>
-    public static class CreateUserCommand
+    public static class CreateUser
     {
         #region Command
         public class Command : ICommand
