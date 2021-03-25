@@ -21,8 +21,4 @@
     <ProjectReference Include="..\MNV.Domain\MNV.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

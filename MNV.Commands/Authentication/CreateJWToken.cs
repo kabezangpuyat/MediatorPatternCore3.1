@@ -57,7 +57,7 @@ namespace MNV.Commands.Authentication
                 var encryptedPassword = _encryptionService.Encrypt(request.Password);
                 var data = _dataContext.User.Where(x => x.Username == request.Username && x.Password == encryptedPassword);
 
-                if(data == null)
+                if(data.Count() == 0)
                     throw new DataNoFoundException(ExceptionMessageConstants.DataNotFound);
 
                 var user = data.ToSingleUserViewModel();
