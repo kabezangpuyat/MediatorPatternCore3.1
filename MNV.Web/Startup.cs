@@ -148,11 +148,12 @@ namespace MNV.Web
 
             app.UseStaticFiles();
 
+            string allowedUrls = Configuration.GetSection("AllowedUrls").Get<string>();
+            string[] origins = allowedUrls.Split(new string[] { "," }, StringSplitOptions.None); 
             app.UseRouting();
             app.UseAuthentication();
             app.UseCors(builder => builder
-              .WithOrigins("http://localhost:3000",
-                           "https://test.test.com")
+              .WithOrigins(origins)
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials());
