@@ -26,6 +26,7 @@ using MNV.Core.Services;
 using MNV.Infrastructure.Services;
 using MNV.Core.Providers;
 using MNV.Infrastructure.Providers;
+using System.Reflection;
 
 namespace MNV.Web
 {

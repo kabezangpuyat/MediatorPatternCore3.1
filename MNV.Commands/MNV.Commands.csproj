@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MNV.Core\MNV.Core.csproj" />
-    <ProjectReference Include="..\MNV.Infrastructure\MNV.Infrastructure.csproj" />
     <ProjectReference Include="..\MNV.Mappers\MNV.Mappers.csproj" />
   </ItemGroup>
 
