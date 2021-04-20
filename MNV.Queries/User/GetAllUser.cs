@@ -35,9 +35,9 @@ namespace MNV.Queries.User
         #endregion
 
         #region Handler
-        public class GetUserByIdHandler : QueryHandler, IRequestHandler<Query, QueryCollectionResponse>
+        public class GetAllUserHandler : QueryHandler, IRequestHandler<Query, QueryCollectionResponse>
         {
-            public GetUserByIdHandler(IDataContext dataContext,
+            public GetAllUserHandler(IDataContext dataContext,
                 IMapper mapper,
                 ICurrentUserProvider currentUserProvider) : base(dataContext, mapper, currentUserProvider)
             {

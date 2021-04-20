@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MNV.Commands\MNV.Commands.csproj" />
     <ProjectReference Include="..\MNV.Database\MNV.Database.csproj" />
+    <ProjectReference Include="..\MNV.Infrastructure\MNV.Infrastructure.csproj" />
     <ProjectReference Include="..\MNV.Queries\MNV.Queries.csproj" />
   </ItemGroup>
 
